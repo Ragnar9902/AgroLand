@@ -19,8 +19,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: install markdown
-        run: npm install -g markdownlint-cli
 
       - run: make help
       - run: make build-docker

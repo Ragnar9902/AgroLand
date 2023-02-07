@@ -12,7 +12,7 @@ help: ## shows commands usage information
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 check: ## test the app
-package: build  ## Generates a zip archive and a docker image to deployment
+package: build  ## Generates a zip archive and a docker image to deployment.
 	sudo docker build -t agroland:${IMAGE_TAG} .
 	sudo docker save -o agroland_image.tar agroland:${IMAGE_TAG}
 	sudo zip agroland-website.zip web_dynamic/app/ agroland_image.tar
