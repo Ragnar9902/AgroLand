@@ -6,7 +6,7 @@ endif
 clean: ##cleanup the content of the directory
 	@-make stop
 
-node-start: ## build go
+node-start: ## build app
 	@sudo docker run --rm --workdir=/app agroland:capstom npm start
 help: ##shows commands usage information
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
