@@ -1,0 +1,44 @@
+name: web_dynamic
+on:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - 1.0.0
+  schedule:
+    - cron: '0 0 * * *'
+  pull_request:
+    types:
+      - opened
+jobs:
+  web_dynamic:
+    runs-on: node:latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: |
+          make build-docker
+          make node-start
+          make help
+      - name: Archive generated zip
+        uses: actions/upload-artifact@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          name: agroland-website
+          path: web_dynamic/agroland-website.zip
+      - name: deploy
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: './web_dynamic/app'
+          production-branch: master
+          production-deploy: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
