@@ -19,10 +19,9 @@ jobs:
       - uses: actions/setup-node@master
         with:
           node-version: 16
+      - run: make build-docker
       - uses: docker/build-push-action@master
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME}}
           PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD}}
       - run: make help
-      - run: make build-docker
-      - run: make node-start
