@@ -2,50 +2,26 @@ name: web_dynamic
 on:
   push:
     branches:
-      - main
-      - master
-    tags:
-      - 1.0.0
+      - 'main'
+      - 'master'
   schedule:
     - cron: '0 0 * * *'
-  pull_request:
-    types:
-      - opened
+
+permissions: read-all
+
 jobs:
-  web_dynamic:
+  builds:
+    name: run-app
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
+
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-      - run: |
-          make build-docker
-          make node-start
-          make help
-      - name: Archive generated zip
-        uses: actions/upload-artifact@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
-        with:
-          name: agroland-website
-          path: web_dynamic/agroland-website.zip
-      - name: deploy
-        uses: nwtgck/actions-netlify@v1.2
-        with:
-          publish-dir: './web_dynamic/app'
-          production-branch: master
-          production-deploy: true
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions"
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-          overwrites-pull-request-comment: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
+          node-version: 16
+      - name: install markdown
+        run: npm install -g markdownlint-cli
+
+      - run: make help
+      - run: make build-docker
+      - run: make node-start
