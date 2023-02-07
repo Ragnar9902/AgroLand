@@ -16,7 +16,7 @@ package: build  ## Generates a zip archive and a docker image to deployment.
 	sudo docker build -t agroland:${IMAGE_TAG} .
 	sudo docker save -o agroland_image.tar agroland:${IMAGE_TAG}
 	sudo zip agroland-website.zip web_dynamic/app/ agroland_image.tar
-validate: ## W3C validator
+validate: ## W3C validators
 	-git clone https://github.com/holbertonschool/W3C-Validator.git
 	-./W3C-Validator/w3c_validator.py ./dist/index.html
 	-rm -rf ./W3C-Validator
