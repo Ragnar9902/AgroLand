@@ -3,7 +3,7 @@ IMAGE_TAG=$(shell git tag | tail -n 1)
 ifeq ($(strip $(IMAGE_TAG)),)
 IMAGE_TAG=$(shell git rev-parse --abbrev-ref HEAD)
 endif
-clean: ##Cleanup the content of the directory
+clean: ##cleanup the content of the directory
 	@-make stop
 
 node-start: ## build go
