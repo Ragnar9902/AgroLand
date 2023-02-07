@@ -38,7 +38,7 @@ build-docker:	## Builds a Docker image from Dockerfile on build directory
 
 stop: ## Stops the application
 	@kill $(shell pgrep awesome-api) 2>&1 &
-docker-tests:	## Test the generated docker image using container-structure-test and cst.yml config file
+docker-tests: ## Test the generated docker image using container-structure-test and cst.yml config file
 	make build-docker
 	container-structure-test test --image awesome:build --config build/cst.yml
 	container-structure-test test --image awesome:${IMAGE_TAG} --config cst.yml
