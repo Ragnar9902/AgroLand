@@ -27,7 +27,7 @@ test: ## Tests the application
 	@make integration-tests
 
 lint: ## make lint on the files
-unit-tests: ## make  unit tests on the files
+unit-tests: ## make unit tests on the files
 	@sudo docker run --rm --volume=$(shell pwd):/app --workdir=/app awesome:build go test -v -short -coverprofile=coverage-units.out
 
 integration-tests: ## make unit tests on the files
