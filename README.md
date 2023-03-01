@@ -28,16 +28,16 @@ Before you begin, make sure you have the following software installed on your ma
 To install and run the project, follow these steps:
 
 Clone the repository:
---- git clone https://github.com/username/AgroLand.git
+   git clone https://github.com/username/AgroLand.git
 
 Change into the project directory:
---- cd project
+   cd project
 
 Install the project's dependencies:
---- npm install
+   npm install
 
 Start the development server:
---- npm run dev
+   npm run dev
 This will start the server at http://localhost:3000.
 
 Open the project in your browser by navigating to http://localhost:3000.
